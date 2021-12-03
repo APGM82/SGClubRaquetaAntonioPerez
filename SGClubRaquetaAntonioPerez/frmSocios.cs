@@ -120,25 +120,31 @@ namespace SGClubRaquetaAntonioPerez
             {
                 //Recuperamos el objeto de la BD, filtrando por el campo Socios
 
-                socios objSoc = objBD.socios.Find(txbDni.Text);
+                socios objSocio = objBD.socios.Find(txbDni.Text);
                 var consulta = from resr in objBD.reservas
                                from soc in objBD.socios
                                where soc.DNI == resr.socio && soc.DNI == txbDni.Text
                                select new { resr.idReserva };
-                var n = consulta.ToList();
-
-                if (n.Count > 0)
+                var qSocios = consulta.ToList();
+                if (objSocio == null)
                 {
-                    MessageBox.Show("tiene reservas");
+                    MessageBox.Show("No se ha encontrado al socio");
                 }
-                else
-                {
-                    //se elemina el objeto de la tabla, para quitarlo como registro
-                    objBD.socios.Remove(objSoc);
-                    //se guardan los cambios
-                    objBD.SaveChanges();
-                    MessageBox.Show("Eliminado");
+                else { 
+                    if (qSocios.Count > 0)
+                    {
+                        MessageBox.Show("Este socio tiene Reservas pendientes y no se puede borrar");
+                    }
+                    else
+                    {
+                        //se elemina el objeto de la tabla, para quitarlo como registro
+                        objBD.socios.Remove(objSocio);
+                        //se guardan los cambios
+                        objBD.SaveChanges();
+                        MessageBox.Show("Socio borrado correctamente");
+                    }
                 }
+                
             }
         }
     }
