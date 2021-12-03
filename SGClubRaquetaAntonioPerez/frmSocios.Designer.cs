@@ -46,29 +46,37 @@ namespace SGClubRaquetaAntonioPerez
             this.labApellido = new System.Windows.Forms.Label();
             this.labNombre = new System.Windows.Forms.Label();
             this.labDni = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnMostrar = new System.Windows.Forms.Button();
+            this.btnInsertar = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(472, 368);
+            this.btnEliminar.BackColor = System.Drawing.Color.LightCoral;
+            this.btnEliminar.Location = new System.Drawing.Point(440, 352);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(115, 23);
+            this.btnEliminar.Size = new System.Drawing.Size(115, 40);
             this.btnEliminar.TabIndex = 36;
             this.btnEliminar.Text = "Eliminar";
-            this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(328, 368);
+            this.btnModificar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnModificar.Location = new System.Drawing.Point(296, 352);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(115, 23);
+            this.btnModificar.Size = new System.Drawing.Size(115, 40);
             this.btnModificar.TabIndex = 35;
             this.btnModificar.Text = "Modificar";
-            this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.UseVisualStyleBackColor = false;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(456, 40);
+            this.btnBuscar.Location = new System.Drawing.Point(480, 48);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(128, 23);
             this.btnBuscar.TabIndex = 34;
@@ -78,7 +86,7 @@ namespace SGClubRaquetaAntonioPerez
             // 
             // mtbCuenta
             // 
-            this.mtbCuenta.Location = new System.Drawing.Point(328, 304);
+            this.mtbCuenta.Location = new System.Drawing.Point(352, 312);
             this.mtbCuenta.Mask = "ES0000000000000000000000";
             this.mtbCuenta.Name = "mtbCuenta";
             this.mtbCuenta.Size = new System.Drawing.Size(256, 22);
@@ -86,14 +94,14 @@ namespace SGClubRaquetaAntonioPerez
             // 
             // txbEmail
             // 
-            this.txbEmail.Location = new System.Drawing.Point(328, 264);
+            this.txbEmail.Location = new System.Drawing.Point(352, 272);
             this.txbEmail.Name = "txbEmail";
             this.txbEmail.Size = new System.Drawing.Size(256, 22);
             this.txbEmail.TabIndex = 32;
             // 
             // mtbTelefono
             // 
-            this.mtbTelefono.Location = new System.Drawing.Point(328, 216);
+            this.mtbTelefono.Location = new System.Drawing.Point(352, 224);
             this.mtbTelefono.Mask = "600000000";
             this.mtbTelefono.Name = "mtbTelefono";
             this.mtbTelefono.Size = new System.Drawing.Size(256, 22);
@@ -101,28 +109,28 @@ namespace SGClubRaquetaAntonioPerez
             // 
             // txbDomicilio
             // 
-            this.txbDomicilio.Location = new System.Drawing.Point(328, 176);
+            this.txbDomicilio.Location = new System.Drawing.Point(352, 184);
             this.txbDomicilio.Name = "txbDomicilio";
             this.txbDomicilio.Size = new System.Drawing.Size(256, 22);
             this.txbDomicilio.TabIndex = 30;
             // 
             // txbApellidos
             // 
-            this.txbApellidos.Location = new System.Drawing.Point(328, 136);
+            this.txbApellidos.Location = new System.Drawing.Point(352, 144);
             this.txbApellidos.Name = "txbApellidos";
             this.txbApellidos.Size = new System.Drawing.Size(256, 22);
             this.txbApellidos.TabIndex = 29;
             // 
             // txbNombre
             // 
-            this.txbNombre.Location = new System.Drawing.Point(328, 96);
+            this.txbNombre.Location = new System.Drawing.Point(352, 104);
             this.txbNombre.Name = "txbNombre";
             this.txbNombre.Size = new System.Drawing.Size(256, 22);
             this.txbNombre.TabIndex = 28;
             // 
             // txbDni
             // 
-            this.txbDni.Location = new System.Drawing.Point(168, 40);
+            this.txbDni.Location = new System.Drawing.Point(192, 48);
             this.txbDni.Name = "txbDni";
             this.txbDni.Size = new System.Drawing.Size(256, 22);
             this.txbDni.TabIndex = 27;
@@ -130,7 +138,7 @@ namespace SGClubRaquetaAntonioPerez
             // labCuenta
             // 
             this.labCuenta.AutoSize = true;
-            this.labCuenta.Location = new System.Drawing.Point(192, 304);
+            this.labCuenta.Location = new System.Drawing.Point(216, 312);
             this.labCuenta.Name = "labCuenta";
             this.labCuenta.Size = new System.Drawing.Size(115, 17);
             this.labCuenta.TabIndex = 26;
@@ -139,7 +147,7 @@ namespace SGClubRaquetaAntonioPerez
             // labEmail
             // 
             this.labEmail.AutoSize = true;
-            this.labEmail.Location = new System.Drawing.Point(265, 264);
+            this.labEmail.Location = new System.Drawing.Point(289, 272);
             this.labEmail.Name = "labEmail";
             this.labEmail.Size = new System.Drawing.Size(42, 17);
             this.labEmail.TabIndex = 25;
@@ -148,7 +156,7 @@ namespace SGClubRaquetaAntonioPerez
             // labTelefono
             // 
             this.labTelefono.AutoSize = true;
-            this.labTelefono.Location = new System.Drawing.Point(243, 216);
+            this.labTelefono.Location = new System.Drawing.Point(267, 224);
             this.labTelefono.Name = "labTelefono";
             this.labTelefono.Size = new System.Drawing.Size(64, 17);
             this.labTelefono.TabIndex = 24;
@@ -157,7 +165,7 @@ namespace SGClubRaquetaAntonioPerez
             // labDomicilio
             // 
             this.labDomicilio.AutoSize = true;
-            this.labDomicilio.Location = new System.Drawing.Point(248, 176);
+            this.labDomicilio.Location = new System.Drawing.Point(267, 184);
             this.labDomicilio.Name = "labDomicilio";
             this.labDomicilio.Size = new System.Drawing.Size(64, 17);
             this.labDomicilio.TabIndex = 23;
@@ -166,7 +174,7 @@ namespace SGClubRaquetaAntonioPerez
             // labApellido
             // 
             this.labApellido.AutoSize = true;
-            this.labApellido.Location = new System.Drawing.Point(247, 136);
+            this.labApellido.Location = new System.Drawing.Point(266, 144);
             this.labApellido.Name = "labApellido";
             this.labApellido.Size = new System.Drawing.Size(65, 17);
             this.labApellido.TabIndex = 22;
@@ -175,7 +183,7 @@ namespace SGClubRaquetaAntonioPerez
             // labNombre
             // 
             this.labNombre.AutoSize = true;
-            this.labNombre.Location = new System.Drawing.Point(254, 95);
+            this.labNombre.Location = new System.Drawing.Point(273, 104);
             this.labNombre.Name = "labNombre";
             this.labNombre.Size = new System.Drawing.Size(58, 17);
             this.labNombre.TabIndex = 21;
@@ -184,17 +192,51 @@ namespace SGClubRaquetaAntonioPerez
             // labDni
             // 
             this.labDni.AutoSize = true;
-            this.labDni.Location = new System.Drawing.Point(121, 40);
+            this.labDni.Location = new System.Drawing.Point(144, 48);
             this.labDni.Name = "labDni";
             this.labDni.Size = new System.Drawing.Size(31, 17);
             this.labDni.TabIndex = 20;
             this.labDni.Text = "DNI";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(32, 416);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(768, 136);
+            this.dataGridView1.TabIndex = 37;
+            // 
+            // btnMostrar
+            // 
+            this.btnMostrar.Location = new System.Drawing.Point(584, 352);
+            this.btnMostrar.Name = "btnMostrar";
+            this.btnMostrar.Size = new System.Drawing.Size(115, 40);
+            this.btnMostrar.TabIndex = 38;
+            this.btnMostrar.Text = "Mostrar Todos";
+            this.btnMostrar.UseVisualStyleBackColor = true;
+            this.btnMostrar.Click += new System.EventHandler(this.btnMostrar_Click);
+            // 
+            // btnInsertar
+            // 
+            this.btnInsertar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.btnInsertar.Location = new System.Drawing.Point(152, 352);
+            this.btnInsertar.Name = "btnInsertar";
+            this.btnInsertar.Size = new System.Drawing.Size(115, 40);
+            this.btnInsertar.TabIndex = 39;
+            this.btnInsertar.Text = "Insertar";
+            this.btnInsertar.UseVisualStyleBackColor = false;
+            this.btnInsertar.Click += new System.EventHandler(this.btnInsertar_Click);
+            // 
             // frmSocios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(832, 579);
+            this.Controls.Add(this.btnInsertar);
+            this.Controls.Add(this.btnMostrar);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnBuscar);
@@ -213,7 +255,8 @@ namespace SGClubRaquetaAntonioPerez
             this.Controls.Add(this.labNombre);
             this.Controls.Add(this.labDni);
             this.Name = "frmSocios";
-            this.Text = "frmSocios";
+            this.Text = "Socios";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,5 +281,8 @@ namespace SGClubRaquetaAntonioPerez
         private System.Windows.Forms.Label labApellido;
         private System.Windows.Forms.Label labNombre;
         private System.Windows.Forms.Label labDni;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btnMostrar;
+        private System.Windows.Forms.Button btnInsertar;
     }
 }

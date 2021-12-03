@@ -49,5 +49,99 @@ namespace SGClubRaquetaAntonioPerez
 
             }
         }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            using (clubraquetaEntities objBD = new clubraquetaEntities())
+            {
+                //Recuperamos el objeto de la BD, filtrando por el campo categoria
+                //categorias objCat = objBD.categorias.First(x => x.categoria.Equals(txbCategoria.Text));
+                socios objSocios = objBD.socios.Find(txbDni.Text);
+                if (objSocios != null)
+                {
+                    objSocios.nombre = txbNombre.Text;
+                    objSocios.apellidos = txbApellidos.Text;
+                    objSocios.domicilio = txbDomicilio.Text;
+                    objSocios.telefono = mtbTelefono.Text;
+                    objSocios.email = txbEmail.Text;
+                    objSocios.cuentaCorriente = mtbCuenta.Text;
+
+
+                    objBD.SaveChanges();
+                    MessageBox.Show("modificado correctamente");
+                }
+                else { MessageBox.Show("El DNI no se puede modificar o No se ha encontrado el  DNI"); }
+            }
+        }
+
+        private void btnMostrar_Click(object sender, EventArgs e)
+        {
+            using (clubraquetaEntities objBD = new clubraquetaEntities())
+            {
+
+                var qSocios = from c in objBD.socios
+                              orderby c.apellidos, c.nombre ascending
+                              select new { c.DNI, c.nombre, c.apellidos, c.telefono, c.email};
+                var listaSocios = qSocios.ToList();
+                if (listaSocios.Count > 0) 
+                {
+                    dataGridView1.DataSource = listaSocios;
+                }
+            }
+        }
+
+        private void btnInsertar_Click(object sender, EventArgs e)
+        {
+            {
+                using (clubraquetaEntities objBD = new clubraquetaEntities())
+                {
+                    //Creamos el objeto categoria
+                    socios objSocio = new socios();
+                    objSocio.DNI = txbDni.Text;
+                    objSocio.nombre= txbNombre.Text;
+                    objSocio.apellidos = txbApellidos.Text;
+                    objSocio.domicilio = txbDomicilio.Text;
+                    objSocio.telefono = mtbTelefono.Text;
+                    objSocio.email = txbEmail.Text;
+                    objSocio.cuentaCorriente = mtbCuenta.Text;
+                    //se añade el objeto a la tabla, para incluirlo como nuevo...
+                    objBD.socios.Add(objSocio);
+
+                    //se guardan los cambios
+                    objBD.SaveChanges();
+                    MessageBox.Show("Socio guardado correctamente");
+                }
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            using (clubraquetaEntities objBD = new clubraquetaEntities())
+            {
+                //Recuperamos el objeto de la BD, filtrando por el campo Socios
+
+                socios objSoc = objBD.socios.Find(txbDni.Text);
+                var consulta = from resr in objBD.reservas
+                               from soc in objBD.socios
+                               where soc.DNI == resr.socio && soc.DNI == txbDni.Text
+                               select new { resr.idReserva };
+                var n = consulta.ToList();
+
+                if (n.Count > 0)
+                {
+                    MessageBox.Show("tiene reservas");
+                }
+                else
+                {
+                    //se elemina el objeto de la tabla, para quitarlo como registro
+                    objBD.socios.Remove(objSoc);
+                    //se guardan los cambios
+                    objBD.SaveChanges();
+                    MessageBox.Show("Eliminado");
+                }
+            }
+        }
     }
 }
+
+
