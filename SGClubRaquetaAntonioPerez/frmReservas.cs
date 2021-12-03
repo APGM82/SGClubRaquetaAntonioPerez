@@ -20,27 +20,27 @@ namespace SGClubRaquetaAntonioPerez
             listaPistas();
         }
        
-        clubraquetaDataSetTableAdapters.sociosTableAdapter TBSocio = new clubraquetaDataSetTableAdapters.sociosTableAdapter();
+        clubraquetaDataSetTableAdapters.sociosTableAdapter TablaSocio = new clubraquetaDataSetTableAdapters.sociosTableAdapter();
         clubraquetaDataSet dataSet = new clubraquetaDataSet();
-        clubraquetaDataSetTableAdapters.pistasTableAdapter TBPista = new clubraquetaDataSetTableAdapters.pistasTableAdapter();
+        clubraquetaDataSetTableAdapters.pistasTableAdapter TablaPista = new clubraquetaDataSetTableAdapters.pistasTableAdapter();
         clubraquetaDataSet dataSetPistas = new clubraquetaDataSet();
-        clubraquetaDataSetTableAdapters.reservasTableAdapter TBReserva = new clubraquetaDataSetTableAdapters.reservasTableAdapter();
+        clubraquetaDataSetTableAdapters.reservasTableAdapter TablaReserva = new clubraquetaDataSetTableAdapters.reservasTableAdapter();
         clubraquetaDataSet dataSetReservas = new clubraquetaDataSet();
-        List<string> idSocio = new List<string>();
+        List<string> pkSocio = new List<string>();
         
         private void cargarSocio()
         {
-            TBSocio.FillByApellidosNombre(dataSet.socios);
+            TablaSocio.FillByApellidosNombre(dataSet.socios);
             for (int i = 0; i < dataSet.socios.Count; i++)
             {
                 cmbSocios.Items.Add(dataSet.socios[i].apellidos + "," + dataSet.socios[i].nombre);
-                idSocio.Add(dataSet.socios[i].DNI);
+                pkSocio.Add(dataSet.socios[i].DNI);
             }
         }
 
         private void listaPistas()
         {
-            TBPista.FillBypistasNombre(dataSetPistas.pistas);
+            TablaPista.FillBypistasNombre(dataSetPistas.pistas);
             for (int i = 0; i < dataSetPistas.pistas.Count; i++)
             {
                 cbPista.Items.Add(dataSetPistas.pistas[i].nombre);
@@ -49,7 +49,7 @@ namespace SGClubRaquetaAntonioPerez
         private void cmbSocios_SelectedIndexChanged(object sender, EventArgs e)
         {
             //seleccionando cada elemento en su caja
-            TBSocio.FillByPrimaryKey(dataSet.socios, idSocio[cmbSocios.SelectedIndex]);
+            TablaSocio.FillByPrimaryKey(dataSet.socios, pkSocio[cmbSocios.SelectedIndex]);
             dgvAux.DataSource = dataSet.socios;
             labDniResultado.Text = dgvAux.Rows[0].Cells[0].Value.ToString();
             txtNombre.Text = dgvAux.Rows[0].Cells[1].Value.ToString();
@@ -59,14 +59,16 @@ namespace SGClubRaquetaAntonioPerez
             txtEmail.Text = dgvAux.Rows[0].Cells[5].Value.ToString();
             mtbCuenta.Text = dgvAux.Rows[0].Cells[6].Value.ToString();
 
-            TBReserva.FillByReservas(dataSetReservas.reservas, labDniResultado.Text);
+            TablaReserva.FillByReservas(dataSetReservas.reservas, labDniResultado.Text);
             dgvLista.DataSource = dataSetReservas.reservas;
             dgvLista.Columns[0].Visible = false;
         }
 
         private void btnReserva_Click(object sender, EventArgs e)
         {
+
             Boolean flagEstado = false;
+            //si estan seleccionadas
             if (!labDniResultado.Text.Equals("") && !cbPista.SelectedIndex.Equals(-1))
             {
                 String fecha = dateFecha.Value.ToShortDateString();
@@ -80,7 +82,8 @@ namespace SGClubRaquetaAntonioPerez
                     str_hora = "" + numHora.Value + ":" + numMinutos.Value + ":00";
                 }
                 dgvAux.DataSource = dataSetPistas.pistas;
-                TBReserva.FillByEstado(dataSetReservas.reservas, int.Parse(dgvAux.Rows[0].Cells[0].Value.ToString()), labDniResultado.Text, "No");
+                TablaReserva.FillByEstado(dataSetReservas.reservas, int.Parse(dgvAux.Rows[0].Cells[0].Value.ToString()), labDniResultado.Text, "No");
+                //si hay reservas
                 if (dataSetReservas.reservas.Rows.Count > 0)
                 {
                     DialogResult rs = MessageBox.Show("El socio tiene abonos pendientes", "Advertencia", MessageBoxButtons.OK);
@@ -88,14 +91,14 @@ namespace SGClubRaquetaAntonioPerez
                 }
                 if (!flagEstado)
                 {
-                    TBReserva.FillByCombrobarPistaFechaHora(dataSetReservas.reservas, int.Parse(dgvAux.Rows[0].Cells[0].Value.ToString()), str_hora, fecha);
+                    TablaReserva.FillByCombrobarPistaFechaHora(dataSetReservas.reservas, int.Parse(dgvAux.Rows[0].Cells[0].Value.ToString()), str_hora, fecha);
                     if (dataSetReservas.reservas.Rows.Count > 0)
                     {
                         DialogResult dr = MessageBox.Show("La pista está reservada", "Advertencia", MessageBoxButtons.OK);
                     }
                     else
                     {
-                        TBReserva.FillByPistaFecha(dataSetReservas.reservas, int.Parse(dgvAux.Rows[0].Cells[0].Value.ToString()), fecha);
+                        TablaReserva.FillByPistaFecha(dataSetReservas.reservas, int.Parse(dgvAux.Rows[0].Cells[0].Value.ToString()), fecha);
                         if (dataSetReservas.reservas.Rows.Count > 0)
                         {
                             TimeSpan r = TimeSpan.Parse(dgvLista.Rows[0].Cells[2].Value.ToString());
@@ -113,7 +116,7 @@ namespace SGClubRaquetaAntonioPerez
                                 DialogResult rs = MessageBox.Show("Se va a realizar la reserva", "Advertencia", MessageBoxButtons.YesNo);
                                 if (rs == DialogResult.Yes)
                                 {
-                                    TBReserva.InsertQueryAddNuevo(fecha, str_hora, int.Parse(dgvAux.Rows[0].Cells[0].Value.ToString()), labDniResultado.Text, "No", 12);
+                                    TablaReserva.InsertQueryAddNuevo(fecha, str_hora, int.Parse(dgvAux.Rows[0].Cells[0].Value.ToString()), labDniResultado.Text, "No", 12);
                                     DialogResult re = MessageBox.Show("Reserva Realizada ", "Advertencia", MessageBoxButtons.OK);
                                 }
                             }
@@ -123,16 +126,17 @@ namespace SGClubRaquetaAntonioPerez
                             DialogResult rs = MessageBox.Show("Se va a realizar la reserva", "Advertencia", MessageBoxButtons.YesNo);
                             if (rs == DialogResult.Yes)
                             {
-                                TBReserva.InsertQueryAddNuevo(fecha, str_hora, int.Parse(dgvAux.Rows[0].Cells[0].Value.ToString()), labDniResultado.Text, "No", 12);
+                                TablaReserva.InsertQueryAddNuevo(fecha, str_hora, int.Parse(dgvAux.Rows[0].Cells[0].Value.ToString()), labDniResultado.Text, "No", 12);
                                 DialogResult re = MessageBox.Show("Reserva Realizada ", "Advertencia", MessageBoxButtons.OK);
                             }
                         }
                     }
                 }
-                TBReserva.FillByResultado(dataSetReservas.reservas, labDniResultado.Text);
+                TablaReserva.FillByResultado(dataSetReservas.reservas, labDniResultado.Text);
                 dgvLista.DataSource = dataSetReservas.reservas;
             }
             else
+            
             {
                 DialogResult rs = MessageBox.Show("Seleccione Socio y pista", "Advertencia", MessageBoxButtons.OK);
             }
@@ -141,9 +145,10 @@ namespace SGClubRaquetaAntonioPerez
         private void cmbPista_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!labDniResultado.Text.Equals(""))
+            
             {
-
-                TBPista.FillByBuscarNombre(dataSetPistas.pistas, cbPista.SelectedItem.ToString());
+                //cabiar foto de pista
+                TablaPista.FillByBuscarNombre(dataSetPistas.pistas, cbPista.SelectedItem.ToString());
                 if (dataSetPistas.pistas.Rows.Count > 0)
                 {
                     DataRow dr = dataSetPistas.pistas.Rows[0];
@@ -152,42 +157,45 @@ namespace SGClubRaquetaAntonioPerez
                     picBoxPistas.Image = Image.FromStream(stream);
                 }
                 
-                TBReserva.FillByResultado(dataSetReservas.reservas, labDniResultado.Text);
+                TablaReserva.FillByResultado(dataSetReservas.reservas, labDniResultado.Text);
                 dgvLista.DataSource = dataSetReservas.reservas;
                 dgvLista.Columns[0].Visible = false;
 
             }
             else
             {
-                DialogResult rs = MessageBox.Show("Selecciona un Socio Primero", "!ATENCION¡", MessageBoxButtons.OK);
+                DialogResult rs = MessageBox.Show("Selecciona un Socio", "Advertencia", MessageBoxButtons.OK);
             }
         }
 
         private void btnPagar_Click(object sender, EventArgs e)
         {
+            //si hay seleccionado
             if (dgvLista.SelectedRows.Count > 0)
             {
+                //si el pago esta a NO
                 if (dgvLista.SelectedRows[0].Cells[5].Value.Equals("No"))
                 {
 
-                    TBReserva.UpdateQueryPagoId("Si", int.Parse(dgvLista.SelectedRows[0].Cells[0].Value.ToString()), int.Parse(dgvLista.SelectedRows[0].Cells[0].Value.ToString()));
-                    DialogResult dr = MessageBox.Show("Se ha pagado la reserva", "!ATENCION¡", MessageBoxButtons.OK);
+                    TablaReserva.UpdateQueryPagoId("Si", int.Parse(dgvLista.SelectedRows[0].Cells[0].Value.ToString()), int.Parse(dgvLista.SelectedRows[0].Cells[0].Value.ToString()));
+                    DialogResult dr = MessageBox.Show("Reserva Pagada", "Advertencia", MessageBoxButtons.OK);
                 }
                 else
                 {
-                    DialogResult dr = MessageBox.Show("Esa reserva ya esta pagada", "!ATENCION¡", MessageBoxButtons.OK);
+                    DialogResult dr = MessageBox.Show("Ya pagada", "Advertencia", MessageBoxButtons.OK);
                 }
             }
             else
             {
-                DialogResult rs = MessageBox.Show("Selecciona una Reserva", "!ATENCION¡", MessageBoxButtons.OK);
+                DialogResult rs = MessageBox.Show("Selecciona una fila", "Advertencia", MessageBoxButtons.OK);
             }
-            TBReserva.FillByResultado(dataSetReservas.reservas, labDniResultado.Text);
+            
+            TablaReserva.FillByResultado(dataSetReservas.reservas, labDniResultado.Text);
             dgvLista.DataSource = dataSetReservas.reservas;
             dgvLista.Columns[0].Visible = false;
         }
 
-        private void ndMinutos_ValueChanged(object sender, EventArgs e)
+        private void numMinutos_ValueChanged(object sender, EventArgs e)
         {
             if (numMinutos.Value == 60)
             {

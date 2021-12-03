@@ -296,7 +296,7 @@ namespace SGClubRaquetaAntonioPerez
             this.numMinutos.Name = "numMinutos";
             this.numMinutos.Size = new System.Drawing.Size(52, 22);
             this.numMinutos.TabIndex = 7;
-            this.numMinutos.ValueChanged += new System.EventHandler(this.ndMinutos_ValueChanged);
+            this.numMinutos.ValueChanged += new System.EventHandler(this.numMinutos_ValueChanged);
             // 
             // lblabel
             // 
